@@ -1,169 +1,301 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Maap ya Aga Maksa 😁😁</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Quicksand&display=swap');
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Maap ya Aga Maksa 😁😁</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Quicksand&display=swap');
 
-        body {
-            display: grid;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #ffe6e9;
-            font-family: 'Quicksand', sans-serif;
-            overflow: hidden; /* biar hati gak keluar layar */
-        }
+    :root{
+      --bg: #0f1724;
+      --card: #ffdae1;
+      --accent: #ff647c;
+      --muted: #ffe6e9;
+      --text: #111827;
+    }
 
-        .container {
-            text-align: center;
-            background-color: #ffdae1;
-            padding: 20px 40px;
-            border-radius: 10px;
-            box-shadow: 0px 5px 15px rgba(0,0,0,0.1);
-            max-width: 350px;
-            position: relative;
-            z-index: 2;
-        }
+    html,body{
+      height:100%;margin:0;padding:0;
+      font-family:'Quicksand',sans-serif;
+      background:var(--bg);
+      color:var(--text);
+    }
 
-        h1 {
-            font-weight: 800;
-            font-size: 2.2rem;
-            margin-bottom: 20px;
-        }
+    .wrap{
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:24px;
+      box-sizing:border-box;
+    }
 
-        h1 .highlight {
-            color: #00e0ff;
-        }
+    .container{
+      width:100%;
+      max-width:420px;
+      background:linear-gradient(180deg,var(--muted), #fff 70%);
+      border-radius:14px;
+      padding:20px;
+      box-shadow:0 10px 30px rgba(0,0,0,0.35);
+      position:relative;
+      overflow:hidden;
+    }
 
-        img {
-            width: 100%;
-            max-width: 250px;
-            margin-bottom: 20px;
-            border-radius: 10px;
-            animation: bounce 2s infinite;
-        }
+    h1{
+      margin:0 0 12px 0;
+      font-size:1.6rem;
+      text-align:center;
+      font-weight:800;
+    }
+    h1 .highlight{ color:#00e0ff; }
 
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
+    .question{
+      text-align:center;
+      padding:8px 12px 18px;
+    }
 
-        p {
-            font-weight: 700;
-            font-size: 1.3rem;
-            margin: 10px 0 20px 0;
-        }
+    .card-img{
+      width:100%;
+      max-width:260px;
+      margin:0 auto 14px auto;
+      display:block;
+      border-radius:10px;
+      box-shadow:0 6px 14px rgba(0,0,0,0.12);
+    }
 
-        .buttons {
-            display: flex;
-            justify-content: space-around;
-            gap: 10px;
-        }
+    p.question-text{
+      margin:6px 0 18px 0;
+      font-weight:700;
+      font-size:1.1rem;
+    }
 
-        .btn {
-            padding: 10px 20px;
-            color: white;
-            font-weight: 600;
-            border-radius: 20px;
-            cursor: pointer;
-            border: none;
-            transition: box-shadow 0.3s ease, transform 0.2s;
-        }
+    .buttons{
+      display:flex;
+      gap:12px;
+      justify-content:center;
+      align-items:center;
+    }
 
-        .btn:hover {
-            transform: scale(1.05);
-        }
+    .btn{
+      padding:10px 18px;
+      border-radius:999px;
+      border:none;
+      cursor:pointer;
+      font-weight:700;
+      color:#fff;
+      background:var(--accent);
+      box-shadow:0 6px 12px rgba(255,100,124,0.4);
+    }
 
-        .btn-yes {
-            background-color: #ff647c;
-            box-shadow: 0 4px 6px rgba(255, 100, 124, 0.6);
-        }
+    .btn-no{ position:relative; }
 
-        .btn-no {
-            background-color: #ff647c;
-            box-shadow: 0 4px 6px rgba(255, 100, 124, 0.9);
-            position: relative;
-            transition: all 0.3s ease;
-        }
+    /* RESULT */
+    .result {
+      margin-top:18px;
+      background:#ffeef2;
+      border-radius:10px;
+      padding:18px;
+      text-align:center;
+      box-shadow:0 8px 18px rgba(0,0,0,0.08);
+      transform:translateY(14px);
+      opacity:0;
+      pointer-events:none;
+      transition:opacity 420ms cubic-bezier(.2,.9,.3,1), transform 420ms cubic-bezier(.2,.9,.3,1);
+    }
 
-        /* Efek hati jatuh */
-        .heart {
-            position: fixed;
-            top: -10px;
-            font-size: 20px;
-            color: #ff5c8d;
-            animation: fall linear forwards;
-            z-index: 1;
-            opacity: 0.8;
-        }
+    .result.show{
+      opacity:1;
+      transform:translateY(0);
+      pointer-events:auto;
+    }
 
-        @keyframes fall {
-            to {
-                transform: translateY(110vh) rotate(360deg);
-                opacity: 0;
-            }
-        }
-    </style>
+    .result .result-gif{
+      width:120px;
+      height:120px;
+      margin:0 auto 12px;
+      border-radius:12px;
+      object-fit:cover;
+      display:block;
+      box-shadow:0 6px 12px rgba(0,0,0,0.12);
+      background:linear-gradient(180deg,#fff,#ffe6ea);
+    }
+
+    .result h2{
+      margin:0;
+      font-size:1.1rem;
+      font-weight:800;
+      letter-spacing:0.2px;
+    }
+
+    /* LOADING */
+    .loading {
+      display:none;
+      margin-top:18px;
+      text-align:center;
+      padding:18px;
+    }
+    .loading.show{
+      display:block;
+      animation: fadeIn 0.4s ease-in;
+    }
+    .loading img {
+      width:80px;
+      height:80px;
+    }
+    @keyframes fadeIn {
+      from{opacity:0;transform:scale(0.8);}
+      to{opacity:1;transform:scale(1);}
+    }
+
+    /* Hearts */
+    .hearts {
+      position:relative;
+      width:100%;
+      height:60px;
+      pointer-events:none;
+      margin-top:8px;
+    }
+    .heart{
+      position:absolute;
+      bottom:0;
+      width:18px;height:18px;
+      transform:translateY(0) scale(0.9);
+      opacity:0;
+      animation: floatUp 1600ms ease-out forwards;
+      filter:drop-shadow(0 6px 10px rgba(255,100,124,0.25));
+    }
+    .heart::before, .heart::after{
+      content:"";
+      position:absolute;
+      width:12px;height:18px;
+      background:var(--accent);
+      border-radius:12px 12px 0 0;
+      transform:rotate(-45deg);
+      left:3px;
+      top:0;
+    }
+    .heart::after{
+      transform:rotate(45deg);
+      left:-3px;
+    }
+    @keyframes floatUp{
+      0%{ transform:translateY(0) scale(0.9); opacity:1;}
+      100%{ transform:translateY(-72px) scale(1.05); opacity:0;}
+    }
+
+    @media (max-width:420px){
+      .container{ padding:16px; border-radius:12px; }
+      h1{ font-size:1.4rem; }
+    }
+
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1><span class="highlight">I have questions</span> for you</h1>
-        <img src="gambar-beruang-kartun-keren-3.gif" alt="Cute bear cartoon" />
-        <p>Do you love me?</p>
-        <div class="buttons">
-            <button class="btn btn-yes" id="yesBtn">Yes</button>
-            <button class="btn btn-no" id="noBtn">No</button>
+  <div class="wrap">
+    <div class="container" id="app">
+      <h1><span class="highlight"> I have questions </span> For you </h1>
+
+      <div class="question">
+        <img src="gambar-beruang-kartun-keren-3.gif" alt="Cute bear" class="card-img" id="mainGif">
+        <p class="question-text">Do you love me?</p>
+
+        <div class="buttons" id="buttons">
+          <button class="btn btn-yes" id="yesBtn">Yes</button>
+          <button class="btn btn-no" id="noBtn">No</button>
         </div>
+
+        <!-- Loading animation -->
+        <div class="loading" id="loadingBox">
+          <img src="heart.gif" alt="Loading love..." />
+          <p>Thinking... 💭</p>
+        </div>
+
+        <!-- Result block -->
+        <div class="result" id="resultBox" aria-hidden="true">
+          <img src="gif-beruang-lucu-0.gif" alt="Love GIF" class="result-gif" id="resultGif">
+          <h2 id="resultText">I knew it 😍!</h2>
+          <div class="hearts" id="heartsContainer" aria-hidden="true"></div>
+        </div>
+      </div>
     </div>
+  </div>
 
-    <script>
-        const noBtn = document.getElementById('noBtn');
-        const yesBtn = document.getElementById('yesBtn');
+  <script>
+    const noBtn = document.getElementById('noBtn');
+    const yesBtn = document.getElementById('yesBtn');
+    const container = document.querySelector('.container');
+    const resultBox = document.getElementById('resultBox');
+    const heartsContainer = document.getElementById('heartsContainer');
+    const loadingBox = document.getElementById('loadingBox');
 
-        // Tombol "No" lari saat diklik
-        noBtn.addEventListener('click', () => {
-            const container = document.querySelector('.container');
-            const containerRect = container.getBoundingClientRect();
-            const btnRect = noBtn.getBoundingClientRect();
+    // No button jumps around
+    noBtn.addEventListener('click', moveNoBtn);
+    function moveNoBtn(){
+      const cRect = container.getBoundingClientRect();
+      const bRect = noBtn.getBoundingClientRect();
+      const padding = 12;
+      const maxLeft = cRect.width - bRect.width - padding;
+      const maxTop = cRect.height - bRect.height - padding;
+      noBtn.style.position = 'absolute';
+      noBtn.style.left = Math.random()*Math.max(0,maxLeft)+'px';
+      noBtn.style.top = Math.random()*Math.max(0,maxTop)+'px';
+      noBtn.style.transition='left .25s ease, top .25s ease';
+    }
 
-            let newLeft = Math.random() * (containerRect.width - btnRect.width);
-            let newTop = Math.random() * (containerRect.height - btnRect.height);
+    // YES button
+    yesBtn.addEventListener('click', () => {
+      // Show loading first
+      loadingBox.classList.add('show');
+      // Hide result if visible
+      resultBox.classList.remove('show');
 
-            newLeft = Math.max(0, Math.min(newLeft, containerRect.width - btnRect.width));
-            newTop = Math.max(0, Math.min(newTop, containerRect.height - btnRect.height));
+      // After 2.3s show "I knew it"
+      setTimeout(() => {
+        loadingBox.classList.remove('show');
+        resultBox.classList.add('show');
+        spawnHearts(6);
+        resultBox.scrollIntoView({ behavior:'smooth', block:'center' });
+      }, 2300);
+    });
 
-            noBtn.style.position = 'absolute';
-            noBtn.style.left = newLeft + 'px';
-            noBtn.style.top = newTop + 'px';
-        });
+    // Floating hearts
+    function spawnHearts(n){
+      for(let i=0;i<n;i++){
+        setTimeout(()=>{
+          const heart=document.createElement('div');
+          heart.className='heart';
+          const left=Math.random()*(heartsContainer.clientWidth-24);
+          heart.style.left=left+'px';
+          const dur=1400+Math.random()*800;
+          heart.style.animationDuration=dur+'ms';
+          heartsContainer.appendChild(heart);
+          setTimeout(()=>heart.remove(),dur+100);
+        },i*120);
+      }
+    }
 
-        // Efek hati jatuh saat klik "Yes"
-        yesBtn.addEventListener('click', () => {
-            alert('Yay! I love you too! ❤️');
-            for (let i = 0; i < 30; i++) {
-                createHeart();
-            }
-        });
+    // Hide result on click
+    resultBox.addEventListener('click',()=>{
+      resultBox.classList.remove('show');
+    });
 
-        function createHeart() {
-            const heart = document.createElement('div');
-            heart.classList.add('heart');
-            heart.textContent = '❤️';
-            document.body.appendChild(heart);
+    yesBtn.addEventListener('keyup',(e)=>{
+      if(e.key==='Enter'||e.key===' ')yesBtn.click();
+    });
 
-            // Posisi acak di sumbu X
-            heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.animationDuration = (2 + Math.random() * 3) + 's'; // durasi acak
-
-            // Hapus setelah animasi selesai
-            setTimeout(() => {
-                heart.remove();
-            }, 5000);
-        }
-    </script>
+    window.addEventListener('resize',()=>{
+      if(getComputedStyle(noBtn).position==='absolute'){
+        const cRect=container.getBoundingClientRect();
+        const bRect=noBtn.getBoundingClientRect();
+        const left=parseFloat(noBtn.style.left||0);
+        const top=parseFloat(noBtn.style.top||0);
+        const maxLeft=cRect.width-bRect.width-12;
+        const maxTop=cRect.height-bRect.height-12;
+        noBtn.style.left=Math.min(Math.max(0,left),Math.max(0,maxLeft))+'px';
+        noBtn.style.top=Math.min(Math.max(0,top),Math.max(0,maxTop))+'px';
+      }
+    });
+  </script>
 </body>
 </html>
