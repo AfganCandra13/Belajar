@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Maap ya Aga Maksa 😁😁</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Quicksand&display=swap');
+
+        body {
+            display: grid;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #ffe6e9;
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        .container {
+            text-align: center;
+            background-color: #ffdae1;
+            padding: 20px 40px;
+            border-radius: 10px;
+            box-shadow: 0px 5px 15px rgba(0,0,0,0.1);
+            max-width: 350px;
+            position: relative; /* Untuk positioning tombol No */
+        }
+
+        h1 {
+            font-weight: 800;
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+        }
+
+        h1 .highlight {
+            color: #00e0ff; /* warna biru seperti pada tulisan love */
+        }
+
+        img {
+            width: 100%;
+            max-width: 250px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+        }
+
+        p {
+            font-weight: 700;
+            font-size: 1.3rem;
+            margin: 10px 0 20px 0;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: space-around;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            color: white;
+            font-weight: 600;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: box-shadow 0.3s ease;
+            border: none;
+        }
+
+        .btn-yes {
+            background-color: #ff647c;
+            box-shadow: 0 4px 6px rgba(255, 100, 124, 0.6);
+        }
+
+        .btn-yes:hover {
+            box-shadow: 0 6px 12px rgba(255, 100, 124, 0.9);
+        }
+
+        .btn-no {
+            background-color: #ff647c;
+            box-shadow: 0 4px 6px  rgba(255, 100, 124, 0.9);
+            position: relative; /* Agar bisa dipindahkan */
+        }
+
+        .btn-no:hover {
+            box-shadow: 0 6px 12px rgba(255, 100, 124, 0.9);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1><span class="highlight"> I have questions </span> For you </h1>
+       <img src="gambar-beruang-kartun-keren-3.gif" alt="Cute bear cartoon" />
+        <p>Do you love me?</p>
+        <div class="buttons">
+            <button class="btn btn-yes" onclick="alert('Yay! I love you too! ❤️')">Yes</button>
+            <button class="btn btn-no" id="noBtn">No</button>
+        </div>
+    </div>
+
+    <script>
+        const noBtn = document.getElementById('noBtn');
+
+        noBtn.addEventListener('click', () => {
+            const container = document.querySelector('.container');
+            const containerRect = container.getBoundingClientRect();
+            const btnRect = noBtn.getBoundingClientRect();
+
+            // Hitung posisi baru secara acak dalam container
+            let newLeft = Math.random() * (containerRect.width - btnRect.width);
+            let newTop = Math.random() * (containerRect.height - btnRect.height);
+
+            // Pastikan tidak keluar dari batas container
+            newLeft = Math.max(0, Math.min(newLeft, containerRect.width - btnRect.width));
+            newTop = Math.max(0, Math.min(newTop, containerRect.height - btnRect.height));
+
+            noBtn.style.position = 'absolute';
+            noBtn.style.left = newLeft + 'px';
+            noBtn.style.top = newTop + 'px';
+        });
+    </script>
+</body>
+</html>
