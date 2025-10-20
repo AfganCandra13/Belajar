@@ -15,6 +15,7 @@
             margin: 0;
             background-color: #ffe6e9;
             font-family: 'Quicksand', sans-serif;
+            overflow: hidden; /* biar hati gak keluar layar */
         }
 
         .container {
@@ -24,7 +25,8 @@
             border-radius: 10px;
             box-shadow: 0px 5px 15px rgba(0,0,0,0.1);
             max-width: 350px;
-            position: relative; /* Untuk positioning tombol No */
+            position: relative;
+            z-index: 2;
         }
 
         h1 {
@@ -34,7 +36,7 @@
         }
 
         h1 .highlight {
-            color: #00e0ff; /* warna biru seperti pada tulisan love */
+            color: #00e0ff;
         }
 
         img {
@@ -42,6 +44,12 @@
             max-width: 250px;
             margin-bottom: 20px;
             border-radius: 10px;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
         }
 
         p {
@@ -62,8 +70,12 @@
             font-weight: 600;
             border-radius: 20px;
             cursor: pointer;
-            transition: box-shadow 0.3s ease;
             border: none;
+            transition: box-shadow 0.3s ease, transform 0.2s;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
         }
 
         .btn-yes {
@@ -71,45 +83,56 @@
             box-shadow: 0 4px 6px rgba(255, 100, 124, 0.6);
         }
 
-        .btn-yes:hover {
-            box-shadow: 0 6px 12px rgba(255, 100, 124, 0.9);
-        }
-
         .btn-no {
             background-color: #ff647c;
-            box-shadow: 0 4px 6px  rgba(255, 100, 124, 0.9);
-            position: relative; /* Agar bisa dipindahkan */
+            box-shadow: 0 4px 6px rgba(255, 100, 124, 0.9);
+            position: relative;
+            transition: all 0.3s ease;
         }
 
-        .btn-no:hover {
-            box-shadow: 0 6px 12px rgba(255, 100, 124, 0.9);
+        /* Efek hati jatuh */
+        .heart {
+            position: fixed;
+            top: -10px;
+            font-size: 20px;
+            color: #ff5c8d;
+            animation: fall linear forwards;
+            z-index: 1;
+            opacity: 0.8;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(110vh) rotate(360deg);
+                opacity: 0;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1><span class="highlight"> I have questions </span> For you </h1>
-       <img src="gambar-beruang-kartun-keren-3.gif" alt="Cute bear cartoon" />
+        <h1><span class="highlight">I have questions</span> for you</h1>
+        <img src="gambar-beruang-kartun-keren-3.gif" alt="Cute bear cartoon" />
         <p>Do you love me?</p>
         <div class="buttons">
-            <button class="btn btn-yes" onclick="alert('Yay! I love you too! ❤️')">Yes</button>
+            <button class="btn btn-yes" id="yesBtn">Yes</button>
             <button class="btn btn-no" id="noBtn">No</button>
         </div>
     </div>
 
     <script>
         const noBtn = document.getElementById('noBtn');
+        const yesBtn = document.getElementById('yesBtn');
 
+        // Tombol "No" lari saat diklik
         noBtn.addEventListener('click', () => {
             const container = document.querySelector('.container');
             const containerRect = container.getBoundingClientRect();
             const btnRect = noBtn.getBoundingClientRect();
 
-            // Hitung posisi baru secara acak dalam container
             let newLeft = Math.random() * (containerRect.width - btnRect.width);
             let newTop = Math.random() * (containerRect.height - btnRect.height);
 
-            // Pastikan tidak keluar dari batas container
             newLeft = Math.max(0, Math.min(newLeft, containerRect.width - btnRect.width));
             newTop = Math.max(0, Math.min(newTop, containerRect.height - btnRect.height));
 
@@ -117,6 +140,30 @@
             noBtn.style.left = newLeft + 'px';
             noBtn.style.top = newTop + 'px';
         });
+
+        // Efek hati jatuh saat klik "Yes"
+        yesBtn.addEventListener('click', () => {
+            alert('Yay! I love you too! ❤️');
+            for (let i = 0; i < 30; i++) {
+                createHeart();
+            }
+        });
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.textContent = '❤️';
+            document.body.appendChild(heart);
+
+            // Posisi acak di sumbu X
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (2 + Math.random() * 3) + 's'; // durasi acak
+
+            // Hapus setelah animasi selesai
+            setTimeout(() => {
+                heart.remove();
+            }, 5000);
+        }
     </script>
 </body>
 </html>
