@@ -213,8 +213,8 @@
 
         <!-- Result block -->
         <div class="result" id="resultBox" aria-hidden="true">
-          <img src="gif-beruang-lucu-0.gif" alt="Love GIF" class="result-gif" id="resultGif">
-          <h2 id="resultText">I knew it babe😍!</h2>
+          <img src="Cat Love GIF by NGcorpvtc (1).gif" alt="Love GIF" class="result-gif" id="resultGif">
+          <h2 id="resultText">I knew it baby😍!</h2>
           <div class="hearts" id="heartsContainer" aria-hidden="true"></div>
         </div>
       </div>
@@ -234,7 +234,7 @@
     function moveNoBtn(){
       const cRect = container.getBoundingClientRect();
       const bRect = noBtn.getBoundingClientRect();
-      const padding = 12;
+      const padding = 10;
       const maxLeft = cRect.width - bRect.width - padding;
       const maxTop = cRect.height - bRect.height - padding;
       noBtn.style.position = 'absolute';
@@ -250,13 +250,13 @@
       // Hide result if visible
       resultBox.classList.remove('show');
 
-      // After 2.3s show "I knew it"
+      // After 2.5s show "I knew it"
       setTimeout(() => {
         loadingBox.classList.remove('show');
         resultBox.classList.add('show');
         spawnHearts(6);
         resultBox.scrollIntoView({ behavior:'smooth', block:'center' });
-      }, 2300);
+      }, 2500);
     });
 
     // Floating hearts
